@@ -2,12 +2,49 @@
 layout: post
 title: Data types in Go
 gh-repo: dppascual/go-cookbook
-tags: [data, golang]
 ---
 
-# Data types
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset = "UTF-8">
+<link href="https://fonts.googleapis.com/css?family=EB+Garamond" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="../css/styles.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<div id="mySidenav" class="sidenav change-icon" onmouseover="openNav()" onmouseout="closeNav()">
+<ol class="toc_list">
+    <li><a href="#variables">Variables</a></li>
+        <ul>
+            <li><a href="#io-reader">The io.Reader interface</a></li>
+            <li><a href="#io.writer">The io.Writer interface</a></li>
+            <li><a href="#io-reader">io.Reader</a></li>
+            <li><a href="#io.writer">io.Writer</a></li>
+        </ul>
+    <li><a href="#numeric_types">Numeric types</a></li>
+    <li><a href="#boolean_type">Boolean type</a></li>
+    <li><a href="#string_type">String type</a></li>
+</ol>
+</div>
 
-## Variables
+<script>
+/* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
+function openNav() {
+document.getElementById("mySidenav").style.width = "250px";
+document.getElementById("main").style.marginLeft = "250px";
+}
+
+/* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
+function closeNav() {
+document.getElementById("mySidenav").style.width = "20px";
+document.getElementById("main").style.marginLeft = "20px";
+}
+</script>
+
+
+<div id="main">
+<h1 id="variables">Variables</h1>
 
 Go is a statically typed programming language. What that means is the compiler always wants to know what the type is for every value in the program. When the compiler knows the type information ahead of time, it can help to make sure that the program is working with values in a safe way. This helps to reduce potential memory corruption and bugs, and provides the compiler the opportunity to produce more performant code.
 
@@ -115,11 +152,11 @@ The sintax for conversion looks like a funcion call, you take the type you want 
 n := float64(10)
 {% endhighlight %}
 
-## Numeric types
+<h1 id="numeric_types">Numeric types</h1>
 
-## Boolean type
+<h1 id="boolean_type">Boolean type</h1>
 
-## String type
+<h1 id="string_type">String type</h1>
 
 `string` type is an important built-in type in Go. *Readability* is about being able to visualize how the code is going to run on the machine so it is important to understand the cost of using `string` type variables so you will see below a very special implementation detail that Go has for strings.
 
@@ -145,3 +182,6 @@ t := s[2:3]
 {% endhighlight %}
 
 Because the `string` is inmutable, it is safe for multiple strings to share the same storage, so slicing s results in a new 2-word structure with a potentially different pointer and length that still refers to the same byte sequence. This means that slicing can be done without allocation or copying, making string slices as efficient as passing around explicit indexes.
+</div>
+</body>
+</html>
