@@ -38,7 +38,7 @@ Callers should always process the n > 0 bytes returned before considering the er
 
 **Implementations of *Read* are discouraged from returning a zero byte count with a nil error, except when len(p) == 0**. Callers should treat a return of 0 and nil as indicating that nothing happened; in particular it does not indicate EOF.
 
-##### Streaming data from readers
+#### Streaming data from readers
 
 The way of streaming data from a reader is by using a method *Read*. It is designed to be called within a loop where, by each iteration, a chunk of data is read from the source and transfered it into buffer p.
 
@@ -72,7 +72,7 @@ func main() {
 }
 {% endhighlight %}
 
-##### A custom io.Reader
+#### A custom io.Reader
 
 In this section is shown how to implement a custom IO reader.
 
@@ -160,7 +160,7 @@ func main() {
 }
 {% endhighlight %}
 
-##### Chaining Readers
+#### Chaining Readers
 
 
 ### The *io.Writer* interface
