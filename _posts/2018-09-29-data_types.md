@@ -2,6 +2,7 @@
 layout: post
 title: Data types in Go
 gh-repo: dppascual/go-cookbook
+tags: ["golang", "data"]
 ---
 
 <head>
