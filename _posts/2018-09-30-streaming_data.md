@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Streaming data in Go
+title: Data IO in Go
 gh-repo: dppascual/go-cookbook/dataIO
 tags: [data, streaming, golang]
 ---
@@ -14,17 +14,23 @@ tags: [data, streaming, golang]
 
 # IO
 
-Input and output operations are provided by a set of primitives that model data as a stream of bytes. In Go, such stream of data is represented as a **slice of bytes([]byte**) that can be accessed for reading or writing.
+Go is a programming language that provides an excellent support for both basic and complex I/O operations. The `io` package is one of the most fundamental packages within the standard library. It is designed for working with bytes and the `io` package 
 
-### The *io.Reader* interface
+Keeping in mind that Go is a programming language built for working with bytes, I/O operations are achieved by using a set of primitives that model data as a stream of bytes. In Go, such stream of data is represented as a **slice of bytes**(**[]byte**) that can be accessed for reading or writing.
+
+The examples in this post will explore common Go interfaces and helpers to deal with I/O and show how to make use of them.
+
+## Reading bytes
+
+### The Reader interface
 
 The *io.Reader* interface is composed of a single method that lets programmers implement code that reads data, from an arbitrary source, and transfers it into the provided slice of bytes.
 
-{% highlight golang linenos %}
+```golang
 type Reader interface {
     Read(p []byte)(n int, err error)
 }
-{% endhighlight %}
+```
 
 For a type to behave as a reader, it must implement the method *Read* from interface *io.Reader*.
 
@@ -160,18 +166,21 @@ func main() {
 }
 {% endhighlight %}
 
-#### Chaining Readers
+### The Seeker interface
 
+### Lexical scanning
 
-### The *io.Writer* interface
+## Writing bytes
+
+### The Writer interface
 
 The *io.Writer* interface is composed of a single method that is designed to read data, from a buffer `[]bytes`, and transfers it into a specified target resource.
 
-{% highlight golang linenos %}
+```golang
 type Writer interface {
     Write(p []byte)(n int, err error)
 }
-{% endhighlight %}
+```
 
 For a type to behave as a writer, it must implement the method *Write* from interface *io.Writer*. 
 
@@ -179,3 +188,78 @@ As a guideline, implementation rules of the *Write()* method given on [io.Writer
 
 *Write* reads data from the buffer `p` and write it to the underlying data stream. It should return the number of bytes written and any error encountered that caused the write to stop early. *Write* must return a non-nil error if it returns n < len(p) and not modify the slice data, even temporarily.
 
+## Helper functions for IO
+
+The Go standard library comes with several helper functions that make it easy to work with streams of bytes.
+
+### io.WriteString()
+
+The `io.WriteString` function writes the content of a string into a specified writer. Its signature is as follows:
+
+```golang
+func io.WriteString(w io.Writer, s string) (n int, err error)
+```
+
+{% highlight golang linenos %}
+package main
+
+import (
+	"fmt"
+	"io"
+	"os"
+)
+
+func main() {
+	file, err := os.Create("./writestring.txt")
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	defer file.Close()
+
+	if _, err := io.WriteString(file, "It is an example about how to use a io.WriteString() function"); err != nil {
+		fmt.Printf("Error writing to a file: %s\n", err)
+	}
+}
+{% endhighlight %}
+
+### io.Copy()
+
+Function io.Copy() makes it easy to stream data from a source reader to a target writer. It abstracts out the for-loop pattern (we’ve seen so far) and properly handle io.EOF and byte counts.
+
+```golang
+func io.Copy(dst io.Writer, src io.Reader) (written int64, err error)
+```
+
+### Concatening streams
+
+
+
+```golang
+func io.MultiReader(readers ...io.Reader) io.Reader
+```
+
+```golang
+func io.MultiWriter(writers ...io.Writer) io.Writer
+```
+
+### Duplicating streams
+
+```golang
+func io.TeeReader(r io.Reader, w Writer) Reader
+```
+
+### Pipe writer and readers
+
+According to the [docs](https://golang.org/pkg/io/#Pipe), `io.Pipe` creates a synchronous in-memory pipe, which can be used to connect code expecting `io.Reader` with code expecting `io.Writer`.
+
+```golang
+func io.Pipe() (*PipeReader, *PipeWriter)
+```
+
+As the signature says, io.Pipe() returns a PipeReader and a PipeWriter. They are connected (hence the pipe), so that everything written to the PipeWriter can be read from the PipeReader.
+
+
+### Restricting stream length
+
+### Buffered IO
