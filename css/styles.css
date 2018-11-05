@@ -1,6 +1,6 @@
 body {
     font-family: 'EB Garamond', 'Lora', 'Times New Roman', serif;
-    font-size: 18px;
+    font-size: 20px;
     color: #404040;
     margin-left: 60px;
     margin-right: 40px;
@@ -61,10 +61,10 @@ hr {
 
 code, pre {
     word-wrap: normal;
-    font-size: 0.9em;
+    /*font-size: 0.9em;*/
     background-color: #f2f5f7; /*#f7f9fa;*/ /* #e6e8eb; */
-    padding-left: 2px;
-    padding-right: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 
